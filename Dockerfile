@@ -6,20 +6,20 @@ USER root
 ARG LFS=/mnt/lfs
 WORKDIR $LFS/sources
 USER lfs
-RUN env
 RUN sleep 31                                                                                 \
  && git clone --depth=1 --recursive https://github.com/libexpat/libexpat.git                 \
- && cd                                                                        libexpat     \
+ && cd                                                          libexpat/expat               \
  && ./buildconf.sh                                                                           \
  && ./configure --prefix=/usr/local --disable-shared --enable-static                         \
  && make                                                                                     \
- && make DESTDIR=/tmp/libexpat install                                                     \
- && rm -rf                                                                    libexpat     \
- && cd           /tmp/libexpat                                                             \
+ && make DESTDIR=/tmp/expat install                                                          \
+ && cd ../..                                                                                 \
+ && rm -rf                                                       libexpat                  \
+ && cd           /tmp/expat                                                             \
  && strip.sh .                                                                               \
- && tar  pacf      ../libexpat.txz .                                                       \
+ && tar  pacf      ../expat.txz .                                                       \
  && cd ..                                                                                    \
- && rm -rf       /tmp/libexpat
+ && rm -rf       /tmp/expat
 
 FROM scratch as final
 COPY --from=builder-01 /tmp/expat.txz /tmp/
