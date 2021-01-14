@@ -9,17 +9,17 @@ USER lfs
 RUN env
 RUN sleep 31                                                                                 \
  && git clone --depth=1 --recursive https://github.com/libexpat/libexpat.git                 \
- && cd                                                                        expat     \
+ && cd                                                                        libexpat     \
  && ./buildconf.sh                                                                           \
  && ./configure --prefix=/usr/local --disable-shared --enable-static                         \
  && make                                                                                     \
- && make DESTDIR=/tmp/expat install                                                     \
- && rm -rf                                                                    expat     \
- && cd           /tmp/expat                                                             \
+ && make DESTDIR=/tmp/libexpat install                                                     \
+ && rm -rf                                                                    libexpat     \
+ && cd           /tmp/libexpat                                                             \
  && strip.sh .                                                                               \
- && tar  pacf      ../expat.txz .                                                       \
+ && tar  pacf      ../libexpat.txz .                                                       \
  && cd ..                                                                                    \
- && rm -rf       /tmp/expat
+ && rm -rf       /tmp/libexpat
 
 FROM scratch as final
 COPY --from=builder-01 /tmp/expat.txz /tmp/
