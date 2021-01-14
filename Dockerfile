@@ -1,4 +1,4 @@
-FROM innovanon/builder:latest as builder-01
+FROM innovanon/doom-base:latest as builder-01
 USER root
 #COPY --from=innovanon/freetype    /tmp/freetype2.txz   /tmp/
 #RUN extract.sh
